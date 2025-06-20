@@ -1,0 +1,6 @@
+dependency:ada_lib=0.1.0-dev=f4c56d5e60c2b26b6a21d1f5119c720b7c8e9881e43f11bfeeacd7a81bc7fd47
+external:GNOGA_OPTIONS_LIBRARY_TYPE=default
+external:LIBRARY_TYPE=default
+profile:gnoga_options=RELEASE
+switches:gnoga_options=-O3,-fdata-sections,-ffunction-sections,-gnatW8,-gnatn
+version:gnat_native=14.2.1
