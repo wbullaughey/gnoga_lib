@@ -1,0 +1,3 @@
+[submodule "gnoga_lib"]
+	path = gnoga_lib
+	url = git@github.com:wbullaughey/gnoga_lib.git
