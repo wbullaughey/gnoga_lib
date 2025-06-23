@@ -13,7 +13,7 @@ tags = []
 ada_lib = "~0.1.0-dev"
 
 [[pins]]
-ada_lib = { path='../ada_lib' }
+ada_lib = { path='../../ada_lib' }
 
 
 
