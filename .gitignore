@@ -1,8 +1,0 @@
-# Object file
-*.o
-*.txt
-# Ada Library Information
-*.ali
-*not_used
-obj/
-alire/
