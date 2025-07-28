@@ -19,7 +19,8 @@ package Gnoga_Ada_Lib is
 
    function Get_Connection_Data (
       From           : in     String := GNAT.Source_Info.Source_Location
-   ) return Connection_Data_Class_Access;
+   ) return Connection_Data_Class_Access
+   with Pre => Has_Connection_Data;
 
    function Has_Connection_Data (
       From           : in     String := GNAT.Source_Info.Source_Location
