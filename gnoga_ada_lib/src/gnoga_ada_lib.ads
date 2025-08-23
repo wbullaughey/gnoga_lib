@@ -15,7 +15,10 @@ package Gnoga_Ada_Lib is
    type Connection_Data_Access is access all Connection_Data_Type;
    type Connection_Data_Class_Access is access all Connection_Data_Type'class;
 
-   procedure Clear_Connection_Data;
+   procedure Clear_Connection_Data (
+      From           : in     String := GNAT.Source_Info.Source_Location
+   ) with Pre => Has_Connection_Data,
+          Post => not Has_Connection_Data;
 
    function Get_Connection_Data (
       From           : in     String := GNAT.Source_Info.Source_Location
@@ -34,7 +37,9 @@ package Gnoga_Ada_Lib is
 
    procedure Set_Connection_Data (
       Connection_Data   : in     Connection_Data_Class_Access;
-      From              : in     String := GNAT.Source_Info.Source_Location);
+      From              : in     String := GNAT.Source_Info.Source_Location
+   ) with pre  => not Has_Connection_Data,
+          post => Has_Connection_Data;
 
    procedure Set_Main_Window (
       Connection_Data         : in out Connection_Data_Type;

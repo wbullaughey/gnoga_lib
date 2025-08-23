@@ -7,11 +7,12 @@ package body GNOGA_Ada_Lib is
    Program_Connection_Data       : Connection_Data_Class_Access := Null;
 
    ---------------------------------------------------------------
-   procedure Clear_Connection_Data is
+   procedure Clear_Connection_Data (
+      From        : in     String := GNAT.Source_Info.Source_Location) is
    ---------------------------------------------------------------
 
    begin
-      Log_Here (Debug);
+      Log_Here (Debug, "frmo "& From);
       Program_Connection_Data := Null;
    end Clear_Connection_Data;
 
@@ -37,12 +38,12 @@ package body GNOGA_Ada_Lib is
       Result                     : constant Boolean :=
                                     Program_Connection_Data /= Null;
    begin
-      Log_Here (Debug, "result " & Result'img & " " & (if Result then
-            Tag_Name (Program_Connection_Data.all'tag)
-         else
-            "") &
-         " from " & From);
-      return Result;
+      return Log_Here (Result, Debug or Trace_Pre_Post_Conditions,
+        (if Result then
+               Tag_Name (Program_Connection_Data.all'tag)
+            else
+               "") &
+            " from " & From);
    end Has_Connection_Data;
 
    ----------------------------------------------------------------
