@@ -197,7 +197,7 @@ package body GNOGA_Ada_Lib.Base is
    end Message_Loop_Task;
 
 begin
-Debug := True;
+--Debug := True;
    Log_Here (Debug or Elaborate);
 end GNOGA_Ada_Lib.Base;
 
