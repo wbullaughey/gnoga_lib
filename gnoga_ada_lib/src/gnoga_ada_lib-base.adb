@@ -16,8 +16,6 @@ package body GNOGA_Ada_Lib.Base is
 
 -- Base_State                    : Base_Class_Access := Null;
    Debug                         : Boolean renames GNOGA_Options.GNOGA_Ada_Lib_Debug;
-   GNOGA_Initialized             : Boolean := False;  -- can only be done once per program
-   Main_Created                  : Boolean := False;
    Message_Loop                  : Message_Loop_Access := Null;
    Task_Id                       : Ada.Task_Identification.Task_Id := Ada.Task_Identification.Null_Task_Id;
 

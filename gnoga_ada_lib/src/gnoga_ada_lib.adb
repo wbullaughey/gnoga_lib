@@ -14,6 +14,8 @@ package body GNOGA_Ada_Lib is
    begin
       Log_Here (Debug, "frmo "& From);
       Program_Connection_Data := Null;
+      GNOGA_Initialized := False;
+      Main_Created := False;
    end Clear_Connection_Data;
 
    ---------------------------------------------------------------

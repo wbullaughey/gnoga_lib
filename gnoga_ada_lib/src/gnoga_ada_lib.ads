@@ -45,4 +45,9 @@ package Gnoga_Ada_Lib is
       Connection_Data         : in out Connection_Data_Type;
       Main_Window             : in     Gnoga.Gui.Window.
                                           Pointer_To_Window_Class);
+
+private
+   GNOGA_Initialized             : Boolean := False;  -- can only be done once per program
+   Main_Created                  : Boolean := False;
+
 end Gnoga_Ada_Lib;
