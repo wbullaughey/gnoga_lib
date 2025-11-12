@@ -3,6 +3,8 @@ with Ada_Lib.Trace; use Ada_Lib.Trace;
 
 package body GNOGA_Ada_Lib is
 
+   use type Gnoga.Gui.Base.Pointer_To_Base_Class;
+
    Debug                         : Boolean renames GNOGA_Options.GNOGA_Ada_Lib_Debug;
    Program_Connection_Data       : Connection_Data_Class_Access := Null;
 
@@ -47,6 +49,16 @@ package body GNOGA_Ada_Lib is
                "") &
             " from " & From);
    end Has_Connection_Data;
+
+   ----------------------------------------------------------------
+   function Has_Parent (
+      Object         : in out Gnoga.Gui.Base.Base_Type'Class
+   ) return Boolean is
+   ----------------------------------------------------------------
+
+   begin
+      return Object.Parent /= Null;
+   end Has_Parent;
 
    ----------------------------------------------------------------
    procedure Report_Exception (

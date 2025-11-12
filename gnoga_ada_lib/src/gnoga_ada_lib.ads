@@ -1,5 +1,6 @@
 with Ada.Exceptions;
 with Ada_Lib.Options;
+with Gnoga.Gui.Base;
 with Gnoga.Gui.Window;
 with GNAT.Source_Info;
 with Gnoga.Types;
@@ -27,6 +28,10 @@ package Gnoga_Ada_Lib is
 
    function Has_Connection_Data (
       From           : in     String := GNAT.Source_Info.Source_Location
+   ) return Boolean;
+
+   function Has_Parent (
+      Object         : in out Gnoga.Gui.Base.Base_Type'Class
    ) return Boolean;
 
    procedure Report_Exception (
