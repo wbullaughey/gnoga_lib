@@ -92,12 +92,13 @@ package body GNOGA_Ada_Lib.Base is
          Log_Here (Debug);
          delay 0.1;        -- let message loop initialize
       end if;
-      Log_Here (Debug, "Main_Created " & Main_Created'img &
-         " Wait_For_Completion " & Wait_For_Completion'img);
+      Log_Here (Debug, "Main_Created " & Main_Created'img);
 
       while not Main_Created loop     -- wait for On_Connect to complete
          delay 0.1;
       end loop;
+
+      Log_Here (Debug, "Wait_For_Completion " & Wait_For_Completion'img);
 
       if Wait_For_Completion then
          Message_Loop_Signal.Wait;
