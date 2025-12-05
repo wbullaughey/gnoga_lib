@@ -9,6 +9,8 @@ licenses = "MIT OR Apache-2.0 WITH LLVM-exception"
 website = ""
 tags = []
 
+project-files = "gnoga_options.gpr"
+
 [[depends-on]]
 ada_lib = "~0.1.0-dev"
 

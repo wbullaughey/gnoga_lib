@@ -1,9 +1,8 @@
+with Ada.Directories;
 with Ada.Task_Identification;
---with Ada.Unchecked_Deallocation;
---with GNOGA_Options;
 with Ada_Lib.Trace; use Ada_Lib.Trace;
 with Ada_Lib.Trace_Tasks;
--- with Gnoga.Application.Multi_Connect;
+--with Gnoga.Application.Multi_Connect;
 with GNOGA_Options;
 
 package body GNOGA_Ada_Lib.Base is
@@ -14,8 +13,7 @@ package body GNOGA_Ada_Lib.Base is
 
    use type Ada.Task_Identification.Task_Id;
 
--- Base_State                    : Base_Class_Access := Null;
-   Debug                         : Boolean renames GNOGA_Options.GNOGA_Ada_Lib_Debug;
+   Debug          : Boolean renames GNOGA_Options.GNOGA_Ada_Lib_Base_Debug;
    Message_Loop                  : Message_Loop_Access := Null;
    Task_Id                       : Ada.Task_Identification.Task_Id := Ada.Task_Identification.Null_Task_Id;
 
@@ -111,6 +109,51 @@ package body GNOGA_Ada_Lib.Base is
          Trace_Exception (Debug, Fault);
          raise Failed with "could not Initialize_GNOGA";
    end Initialize_GNOGA;
+
+   ----------------------------------------------------------------
+   procedure Run (
+      Handler                    : in     Gnoga.Application.Multi_Connect.
+                                             Application_Connect_Event;
+      Directory                  : in     String;
+      Port                       : in     Ada_Lib.Socket_IO.Port_Type;
+      Verbose                    : in     Boolean;
+      Wait_For_Completion        : in     Boolean) is -- should be false for
+                                                      -- multiple unit tests
+   ----------------------------------------------------------------
+
+   begin
+      Log_In (Debug, Quote ("directory", Directory) &
+         " Wait_For_Completion " & Wait_For_Completion'img &
+         " port" & Port'img);
+
+      if Directory'length > 0 then
+         Ada.Directories.Set_Directory (Directory);
+      end if;
+      Log_Here (Debug);
+      GNOGA.Application.Open_URL;
+      Log_Here (Debug);
+      Initialize_GNOGA (
+         Application_Title    => "Camera",
+         Handler              => Handler,
+         Handler_Path         => "default",
+         Port                 => Port,
+--       Start_Message_Loop   => True,
+         Verbose              => Verbose,
+         Wait_For_Completion  => Wait_For_Completion);
+
+--    if Wait_For_Completion then
+--       Log_Here (Debug, "wait for completion");
+--       GNOGA_Ada_Lib.Base.Message_Loop_SignalWait;
+--    end if;
+
+      Log_Out (Debug);
+
+   exception
+      when Fault: others =>
+         Trace_Exception (Debug, Fault);
+         raise;
+
+   end Run;
 
 --   ---------------------------------------------------------------
 --   procedure Set_Base (

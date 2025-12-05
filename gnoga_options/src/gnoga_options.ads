@@ -38,6 +38,7 @@ package GNOGA_Options is
 
    Debug                         : aliased Boolean := False;
    GNOGA_Ada_Lib_Debug           : aliased Boolean := False;
+   GNOGA_Ada_Lib_Base_Debug      : aliased Boolean := False;
    Debug_Options                 : aliased Boolean := False;
    GNOGA_Options                 : GNOGA_Options_Constant_Class_Access := Null;
 

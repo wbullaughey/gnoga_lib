@@ -6,49 +6,49 @@ package body GNOGA_Ada_Lib is
    use type Gnoga.Gui.Base.Pointer_To_Base_Class;
 
    Debug                         : Boolean renames GNOGA_Options.GNOGA_Ada_Lib_Debug;
-   Program_Connection_Data       : Connection_Data_Class_Access := Null;
+-- Program_Connection_Data       : Connection_Data_Class_Access := Null;
 
-   ---------------------------------------------------------------
-   procedure Clear_Connection_Data (
-      From        : in     String := GNAT.Source_Info.Source_Location) is
-   ---------------------------------------------------------------
+--   ---------------------------------------------------------------
+--   procedure Clear_Connection_Data (
+--      From        : in     String := GNAT.Source_Info.Source_Location) is
+--   ---------------------------------------------------------------
+--
+--   begin
+--      Log_Here (Debug, "frmo "& From);
+----    Program_Connection_Data := Null;
+--      GNOGA_Initialized := False;
+--      Main_Created := False;
+--   end Clear_Connection_Data;
 
-   begin
-      Log_Here (Debug, "frmo "& From);
-      Program_Connection_Data := Null;
-      GNOGA_Initialized := False;
-      Main_Created := False;
-   end Clear_Connection_Data;
-
-   ---------------------------------------------------------------
-   function Get_Connection_Data (
-      From                       : in     String := GNAT.Source_Info.Source_Location
-   ) return Connection_Data_Class_Access is
-   ---------------------------------------------------------------
-
-   begin
-      Log_Here (Debug, "Connection_Data from " & From & " " &
-         Tag_Name (Program_Connection_Data.all'tag) & " " &
-         Image (Program_Connection_Data.all'address));
-      return Program_Connection_Data;
-   end Get_Connection_Data;
-
-   ---------------------------------------------------------------
-   function Has_Connection_Data (
-      From                       : in     String := GNAT.Source_Info.Source_Location
-   ) return Boolean is
-   ---------------------------------------------------------------
-
-      Result                     : constant Boolean :=
-                                    Program_Connection_Data /= Null;
-   begin
-      return Log_Here (Result, Debug or Trace_Pre_Post_Conditions,
-        (if Result then
-               Tag_Name (Program_Connection_Data.all'tag)
-            else
-               "") &
-            " from " & From);
-   end Has_Connection_Data;
+-- ---------------------------------------------------------------
+-- function Get_Connection_Data (
+--    From                       : in     String := GNAT.Source_Info.Source_Location
+-- ) return Connection_Data_Class_Access is
+-- ---------------------------------------------------------------
+--
+-- begin
+--    Log_Here (Debug, "Connection_Data from " & From & " " &
+--       Tag_Name (Program_Connection_Data.all'tag) & " " &
+--       Image (Program_Connection_Data.all'address));
+--    return Program_Connection_Data;
+-- end Get_Connection_Data;
+--
+-- ---------------------------------------------------------------
+-- function Has_Connection_Data (
+--    From                       : in     String := GNAT.Source_Info.Source_Location
+-- ) return Boolean is
+-- ---------------------------------------------------------------
+--
+--    Result                     : constant Boolean :=
+--                                  Program_Connection_Data /= Null;
+-- begin
+--    return Log_Here (Result, Debug or Trace_Pre_Post_Conditions,
+--      (if Result then
+--             Tag_Name (Program_Connection_Data.all'tag)
+--          else
+--             "") &
+--          " from " & From);
+-- end Has_Connection_Data;
 
    ----------------------------------------------------------------
    function Has_Parent (
@@ -78,19 +78,19 @@ package body GNOGA_Ada_Lib is
       Window.Alert (Error_Message);
    end Report_Exception;
 
-   ---------------------------------------------------------------
-   procedure Set_Connection_Data (
-      Connection_Data            : in     Connection_Data_Class_Access;
-      From                       : in     String := GNAT.Source_Info.Source_Location) is
-   ---------------------------------------------------------------
-
-   begin
-      Log_In (Debug, "Connection_Data " &
-         Tag_Name (Connection_Data.all'tag) & " " &
-         Image (Connection_Data.all'address) & " from " & From);
-      Program_Connection_Data := Connection_Data;
-      Log_Out (Debug);
-   end Set_Connection_Data;
+-- ---------------------------------------------------------------
+-- procedure Set_Connection_Data (
+--    Connection_Data            : in     Connection_Data_Class_Access;
+--    From                       : in     String := GNAT.Source_Info.Source_Location) is
+-- ---------------------------------------------------------------
+--
+-- begin
+--    Log_In (Debug, "Connection_Data " &
+--       Tag_Name (Connection_Data.all'tag) & " " &
+--       Image (Connection_Data.all'address) & " from " & From);
+--    Program_Connection_Data := Connection_Data;
+--    Log_Out (Debug);
+-- end Set_Connection_Data;
 
    ---------------------------------------------------------------
    procedure Set_Main_Window (
@@ -106,7 +106,7 @@ package body GNOGA_Ada_Lib is
 
 begin
 --debug := True;
-   Standard.Ada_Lib.Trace.Log_Here (Debug);
+   Log_Here (Debug);
 
 end GNOGA_Ada_Lib;
 

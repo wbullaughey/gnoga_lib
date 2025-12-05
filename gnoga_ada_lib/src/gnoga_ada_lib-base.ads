@@ -26,5 +26,14 @@ package GNOGA_Ada_Lib.Base is
    procedure Set_Main_Created (
       Value                      : in     Boolean);
 
+   procedure Run (
+      Handler                    : in     Gnoga.Application.Multi_Connect.
+                                             Application_Connect_Event;
+      Directory                  : in     String;
+      Port                       : in     Ada_Lib.Socket_IO.Port_Type;
+      Verbose                    : in     Boolean;
+      Wait_For_Completion        : in     Boolean);   -- should be false for
+                                                      -- multiple unit tests
+
 end GNOGA_Ada_Lib.Base;
 
