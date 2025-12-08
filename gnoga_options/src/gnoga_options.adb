@@ -8,12 +8,12 @@ package body GNOGA_Options is
 
    Trace_Option                     : constant Character := 'G';
    Options_With_Parameters          : aliased constant
-                                       Ada_Lib.Options.Options_Type :=
+                                       Ada_Lib.Options.Actual.Options_Type :=
                                           Ada_Lib.Options.Create_Options (
                                              Trace_Option,
                                              Ada_Lib.Options.Unmodified);
 -- Options_Without_Parameters       : aliased constant
---                                     Ada_Lib.Options.Options_Type :=
+--                                     Ada_Lib.Options.Actual.Options_Type :=
 
    ----------------------------------------------------------------------------
    overriding
@@ -158,7 +158,7 @@ package body GNOGA_Options is
    end Trace_Parse;
 
 begin
---   Debug := Debug or Debug_Options.Debug_All;
+--   Debug := Debug or Ada_Lib.Options.Debug_All;
 --Debug := True;
 --Trace_Options := True;
    Log_Here (Elaborate);
