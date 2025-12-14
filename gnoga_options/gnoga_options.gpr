@@ -1,10 +1,11 @@
-with "ada_lib.gpr";
+with "ada_lib_base.gpr";
 with "alr_environment.gpr";
 
 project GNOGA_Options is
 
    for Library_Name use "GNOGA_Options";
-   for Library_Version use Project'Library_Name & ".so." & Alr_Environment.Crate_Version;
+   for Library_Version use Project'Library_Name & ".so." &
+      Alr_Environment.Crate_Version;
 
    for Source_Dirs use ("src/", "config/");
    for Object_Dir use "obj/" & Alr_Environment.Build_Profile;

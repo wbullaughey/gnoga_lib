@@ -1,19 +1,27 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada_Lib.Help;
 with Ada_Lib.Trace; use Ada_Lib.Trace;
+with Ada_Lib.Options.Create;
 with Ada_Lib.Options.Runstring;
 
 --pragma Elaborate_All (Ada_Lib.Command_Line_Iterator);
 package body GNOGA_Options is
 
-   Trace_Option                     : constant Character := 'G';
-   Options_With_Parameters          : aliased constant
-                                       Ada_Lib.Options.Actual.Options_Type :=
-                                          Ada_Lib.Options.Create_Options (
-                                             Trace_Option,
-                                             Ada_Lib.Options.Unmodified);
--- Options_Without_Parameters       : aliased constant
---                                     Ada_Lib.Options.Actual.Options_Type :=
+   Trace_Option               : constant Character := 'G';
+   Options_With_Parameters    : aliased constant
+                                 Ada_Lib.Options.Flag_List_Type :=
+                                    Ada_Lib.Options.Create.Create_One (
+                                       Trace_Option,
+                                       Ada_Lib.Options.Unmodified_flag);
+
+   Debug                      : Boolean renames
+                           Ada_Lib.Options.GNOGA_Options.Debug;
+   GNOGA_Ada_Lib_Debug        : Boolean renames
+                           Ada_Lib.Options.GNOGA_Options.GNOGA_Ada_Lib_Debug;
+   GNOGA_Ada_Lib_Base_Debug   : Boolean renames
+                           Ada_Lib.Options.GNOGA_Options.GNOGA_Ada_Lib_Base_Debug;
+   Debug_Options              : Boolean renames
+                           Ada_Lib.Options.GNOGA_Options.Debug_Options;
 
    ----------------------------------------------------------------------------
    overriding
@@ -41,14 +49,14 @@ package body GNOGA_Options is
       Options                    : in out GNOGA_Options_Type;
       Iterator                   : in out Ada_Lib.Options.
                                              Command_Line_Iterator_Interface'class;
-      Option                     : in     Ada_Lib.Options.Option_Type'class
+      Option                     : in     Ada_Lib.Options.Base_Flag_Option_Type'class
    ) return Boolean is
    ----------------------------------------------------------------------------
 
    begin
       Log_In (Debug or Trace_Options, " option " & Option.Image);
       if Ada_Lib.Options.Has_Option (Option, Options_With_Parameters,
-            Ada_Lib.Options.Null_Options) then
+            Ada_Lib.Options.Null_Flag_List) then
          case Option.Kind is
 
          when Ada_Lib.Options.Plain =>
@@ -94,12 +102,10 @@ package body GNOGA_Options is
       case Help_Mode is
 
       when Ada_Lib.Options.Program =>
-            Ada_Lib.Help.Add_Option (Ada_Lib.Options.Create_Option (
-               'G', Ada_Lib.Options.Unmodified),
+            Ada_Lib.Help.Add_Option (Trace_Option,
                "trace options", "GNOGA traces", "GNOGA library");
-            Ada_Lib.Help.Add_Option (Ada_Lib.Options.Create_Option (
-               'w', Ada_Lib.Options.Unmodified),
-               "port number", "Web server port", "GNOGA library");
+            Ada_Lib.Help.Add_Option (
+               'w', "port number", "Web server port", "GNOGA library");
 
       when Ada_Lib.Options.Traces =>
          Put_Line ("GNOGA_Options library trace options (-" & Trace_Option & ")");

@@ -33,14 +33,10 @@ package GNOGA_Options is
       Options                    : in out GNOGA_Options_Type;
       Iterator                   : in out Ada_Lib.Options.
                                              Command_Line_Iterator_Interface'class;
-      Option                     : in     Ada_Lib.Options.Option_Type'class
+      Option                     : in     Ada_Lib.Options.Base_Flag_Option_Type'class
    ) return Boolean;
 
-   Debug                         : aliased Boolean := False;
-   GNOGA_Ada_Lib_Debug           : aliased Boolean := False;
-   GNOGA_Ada_Lib_Base_Debug      : aliased Boolean := False;
-   Debug_Options                 : aliased Boolean := False;
-   GNOGA_Options                 : GNOGA_Options_Constant_Class_Access := Null;
+      GNOGA_Options                 : GNOGA_Options_Constant_Class_Access := Null;
 
 private
 -- overriding

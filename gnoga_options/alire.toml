@@ -12,10 +12,10 @@ tags = []
 project-files = "gnoga_options.gpr"
 
 [[depends-on]]
-ada_lib = "~0.1.0-dev"
+ada_lib_base = "~0.1.0-dev"
 
 [[pins]]
-ada_lib = { path='../../ada_lib' }
+ada_lib_base = { path='../../ada_lib/ada_lib_base' }
 
 
 
