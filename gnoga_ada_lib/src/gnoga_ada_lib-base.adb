@@ -1,9 +1,11 @@
 with Ada.Directories;
 with Ada.Task_Identification;
+with Ada_Lib.Options;
+with Ada_Lib.String_Quote; use Ada_Lib.String_Quote;
 with Ada_Lib.Trace; use Ada_Lib.Trace;
 with Ada_Lib.Trace_Tasks;
 --with Gnoga.Application.Multi_Connect;
-with GNOGA_Options;
+--with GNOGA_Options;
 
 package body GNOGA_Ada_Lib.Base is
 
@@ -13,9 +15,10 @@ package body GNOGA_Ada_Lib.Base is
 
    use type Ada.Task_Identification.Task_Id;
 
-   Debug          : Boolean renames GNOGA_Options.GNOGA_Ada_Lib_Base_Debug;
-   Message_Loop                  : Message_Loop_Access := Null;
-   Task_Id                       : Ada.Task_Identification.Task_Id := Ada.Task_Identification.Null_Task_Id;
+   Debug          : Boolean renames Ada_Lib.Options.Ada_Lib_GNOGA.Base_Debug;
+   Message_Loop   : Message_Loop_Access := Null;
+   Task_Id        : Ada.Task_Identification.Task_Id :=
+                     Ada.Task_Identification.Null_Task_Id;
 
 --   ---------------------------------------------------------------
 --   procedure Clear_Base (

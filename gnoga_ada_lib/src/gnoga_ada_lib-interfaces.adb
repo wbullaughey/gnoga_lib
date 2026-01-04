@@ -23,17 +23,19 @@ package body GNOGA_Ada_Lib.Interfaces is
                                     );
    ---------------------------------------------------------------
    procedure Dump_Keyboard_Event (
-      Keyboard_Event                : in     Standard.gnoga.Gui.Base.Keyboard_Event_Record) is
+      Keyboard_Event    : in     Standard.gnoga.Gui.Base.Keyboard_Event_Record) is
    ---------------------------------------------------------------
 
-      Code                          : constant Natural := Keyboard_Event.Key_Code;
-      Key                           : constant Character :=
-                                       Ada.Characters.Conversions.To_Character (
-                                          Keyboard_Event.Key_Char);
+      Code              : constant Natural := Keyboard_Event.Key_Code;
+      Key               : constant Character :=
+                           Ada.Characters.Conversions.To_Character (
+                              Keyboard_Event.Key_Char);
    begin
       Put ("message type " & Keyboard_Event.Message'img &
                 " key code " & Code'img);
-      if Ada.Characters.Handling.Is_Graphic (Key) then
+      if Ada.Characters.Handling.Is_Letter (Key) then
+            Put (" key " & Key'img);
+      elsif Ada.Characters.Handling.Is_Graphic (Key) then
          if Graphic_Labels (Code) = Null then
             Put (" unknown " & Key'img);
          else

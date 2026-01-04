@@ -1,5 +1,5 @@
 with "alr_environment.gpr";
-with "ada_lib.gpr";
+with "ada_lib_base.gpr";
 with "gnoga.gpr";
 
 project Gnoga_Ada_Lib is

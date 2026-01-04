@@ -7,32 +7,22 @@ with Gnoga.Types;
 
 package Gnoga_Ada_Lib is
 
+   Failed   : exception;
+
    type Connection_Data_Type is new Gnoga.Types.Connection_Data_Type with
                                     record
          Main_Window : Gnoga.Gui.Window.Pointer_To_Window_Class := Null;
-         Options     : Ada_Lib.Options.Interface_Options_Class_Access := Null;
       end record;
 
    type Connection_Data_Access is access all Connection_Data_Type;
    type Connection_Data_Class_Access is access all Connection_Data_Type'class;
 
--- procedure Clear_Connection_Data (
---    From           : in     String := GNAT.Source_Info.Source_Location
--- ) with Pre => Has_Connection_Data,
---        Post => not Has_Connection_Data;
-
--- function Get_Connection_Data (
---    From           : in     String := GNAT.Source_Info.Source_Location
--- ) return Connection_Data_Class_Access
--- with Pre => Has_Connection_Data;
-
--- function Has_Connection_Data (
---    From           : in     String := GNAT.Source_Info.Source_Location
--- ) return Boolean;
-
    function Has_Parent (
       Object         : in out Gnoga.Gui.Base.Base_Type'Class
    ) return Boolean;
+
+   procedure Program_Help (
+      Help_Mode                  : in      Ada_Lib.Options.Help_Mode_Type);
 
    procedure Report_Exception (
       Window         : in out Gnoga.Gui.Window.Window_Type'class;
@@ -40,16 +30,13 @@ package Gnoga_Ada_Lib is
       Message        : in     String;
       Where          : in     String := GNAT.Source_Info.Source_Location);
 
--- procedure Set_Connection_Data (
---    Connection_Data   : in     Connection_Data_Class_Access;
---    From              : in     String := GNAT.Source_Info.Source_Location
--- ) with pre  => not Has_Connection_Data,
---        post => Has_Connection_Data;
-
    procedure Set_Main_Window (
       Connection_Data         : in out Connection_Data_Type;
       Main_Window             : in     Gnoga.Gui.Window.
                                           Pointer_To_Window_Class);
+   procedure Trace_Parse (
+      Iterator       : in out Ada_Lib.Options.
+                                 Command_Line_Iterator_Interface'class);
 
 private
    GNOGA_Initialized             : Boolean := False;  -- can only be done once per program

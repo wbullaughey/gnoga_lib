@@ -1,4 +1,5 @@
-with Ada_Lib.Options.Actual;
+--with Ada_Lib.Options.Flags;
+with Ada_Lib.Options.Nested;
 --with Ada_Lib.Command_Line_Iterator;
 with Ada_Lib.Socket_IO;
 with Ada_Lib.Trace;
@@ -9,7 +10,7 @@ package GNOGA_Options is
 
    Failed                  : exception;
 
-   type GNOGA_Options_Type is limited new Ada_Lib.Options.Actual.
+   type GNOGA_Options_Type is limited new Ada_Lib.Options.Nested.
                               Nested_Options_Type with record
       HTTP_Port            : Ada_Lib.Socket_IO.Port_Type := 8080;
    end record;
