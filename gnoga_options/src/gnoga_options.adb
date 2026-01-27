@@ -106,6 +106,7 @@ package body GNOGA_Options is
       when Ada_Lib.Options.Trace_Mode =>
          Put_Line ("GNOGA library trace options (-" & Trace_Option & ")");
          Put_Line ("      a               all");
+         Put_Line ("      b               GNOGA_Ada_Lib.Base Debug");
          Put_Line ("      d               GNOGA Library Debug");
 --       Put_Line ("      l               GNOGA_Ada_Lib Debug");
          Put_Line ("      s               GNOGA Server Debug");
@@ -137,16 +138,16 @@ package body GNOGA_Options is
             case Trace is
 
                when 'a' =>
-                  Ada_Lib.Options.GNOGA.Debug := True;
---                Ada_Lib.Options.GNOGA.Ada_Lib_Debug := True;
+                  Ada_Lib.Options.GNOGA.Base_Debug := True;
+                  Ada_Lib.Options.GNOGA.Library_Debug := True;
                   Ada_Lib.Options.GNOGA.Options_Debug := True;
                   Ada_Lib.Options.GNOGA.Server_Debug := True;
 
-               when 'd' =>
-                  Ada_Lib.Options.GNOGA.Debug := True;
+               when 'b' =>
+                  Ada_Lib.Options.GNOGA.Base_Debug := True;
 
---             when 'l' =>
---                Ada_Lib.Options.GNOGA.Ada_Lib_Debug := True;
+               when 'd' =>
+                  Ada_Lib.Options.GNOGA.Library_Debug := True;
 
 --             when 'o' =>
                   Ada_Lib.Options.GNOGA.Options_Debug := True;

@@ -1,6 +1,7 @@
 with Ada.Text_IO;use Ada.Text_IO;
 with Ada_Lib.Help;
---with Ada_Lib.Options.Create;
+with Ada_Lib.Options.Create;
+with Ada_Lib.Options.Runstring;
 with Ada_Lib.String_Quote; use Ada_Lib.String_Quote;
 with Ada_Lib.Trace; use Ada_Lib.Trace;
 
@@ -10,12 +11,24 @@ package body GNOGA_Ada_Lib is
 
    -- options for the Ada_Lib.GNOGA library
    Debug    : Boolean renames Ada_Lib.Options.Ada_Lib_GNOGA.Debug;
-   Trace_Option               : constant Character := 'u';
--- Options_With_Parameters    : aliased constant
---                               Ada_Lib.Options.Flag_List_Type :=
---                                  Ada_Lib.Options.Create.Create_One (
---                                     Trace_Option,
---                                     Ada_Lib.Options.Unmodified_flag);
+   Trace_Option               : constant Character := 'G';
+   Options_With_Parameters    : aliased constant
+                                 Ada_Lib.Options.Flag_List_Type :=
+                                    Ada_Lib.Options.Create.Create_One (
+                                       Trace_Option,
+                                       Ada_Lib.Help.Modifier);
+
+   ----------------------------------------------------------------------------
+   procedure Display_Help (            -- common for all programs that use GNOGA_Options
+                              -- prints full help, aborts program
+     Options                     : in     GNOGA_Ada_Lib_Option_Type;  -- only used for dispatch
+     Message                     : in     String := "";   -- leave blank no error help
+     Halt                        : in     Boolean := True) is
+   ----------------------------------------------------------------------------
+
+   begin
+not_implemented;
+   end Display_Help;
 
    ----------------------------------------------------------------
    function Has_Parent (
@@ -28,11 +41,90 @@ package body GNOGA_Ada_Lib is
    end Has_Parent;
 
    ----------------------------------------------------------------------------
-   procedure Program_Help (
-      Help_Mode                  : in      Ada_Lib.Options.Help_Mode_Type) is
+   function Image (
+     Options                     : in     GNOGA_Ada_Lib_Option_Type
+   ) return String is
    ----------------------------------------------------------------------------
 
-      Component                  : constant String := "Ada_Lib.GNOGA";
+   begin
+Not_Implemented;
+return "";
+   end Image;
+
+   ----------------------------------------------------------------------------
+   function Initialize (
+     Options                     : in out GNOGA_Ada_Lib_Option_Type;
+     From                        : in     String := Ada_Lib.Trace.Here
+   ) return Boolean is
+   pragma Unreferenced (Options);
+   ----------------------------------------------------------------------------
+
+   begin
+      Log_In (Debug or Trace_Options);
+
+      Ada_Lib.Options.Runstring.Options.Register (
+         Ada_Lib.Options.Runstring.With_Parameters,
+         Options_With_Parameters, From);
+
+      return Log_Out (True, Debug or Trace_Options);
+   end Initialize;
+
+   ----------------------------------------------------------------------------
+   function Process_Option (  -- process one option
+     Options   : in out GNOGA_Ada_Lib_Option_Type;
+     Iterator  : in out Ada_Lib.Options.Command_Line_Iterator_Interface'class;
+     Option    : in     Ada_Lib.Options.Base_Flag_Option_Type'class
+   ) return Boolean is
+   ----------------------------------------------------------------------------
+
+   begin
+      Log_In (Trace_Options or Debug, Option.Image &
+         Quote (" option", Option.Option));
+
+      if Ada_Lib.Options.Has_Option (Option, Options_With_Parameters,
+            Ada_Lib.Options.Null_Flag_List) then
+         case Option.Kind is
+
+            when Ada_Lib.Options.Modified =>
+
+               case Option.Option is
+
+                  when Trace_Option =>    -- G
+                     Options.Trace_Parse (Iterator);
+
+                  when Others =>
+                     Log_Exception (Trace_Options or Debug,
+                        " other option" & Option.Image);
+                     raise Failed with "Has_Option incorrectly passed " &
+                        Option.Image;
+               end case;
+
+            when Ada_Lib.Options.Plain =>
+
+               Log_Exception (Trace_Options or Debug, " other option" &
+                  Option.Image);
+               raise Failed with "Has_Option incorrectly passed " &
+                  Option.Image;
+
+            when Ada_Lib.Options.Nil_Option =>
+               pragma Assert (False, "unexpected kind");
+
+         end case;
+
+         return Log_Out (True, Trace_Options or Debug, " " & Option.Image);
+      else
+         return Log_Out (False, Trace_Options or Debug,
+            "other option" & " Option " & Option.Image);
+      end if;
+   end Process_Option;
+
+   ----------------------------------------------------------------------------
+   procedure Program_Help (
+      Options     : in     GNOGA_Ada_Lib_Option_Type;
+      Help_Mode   : in     Ada_Lib.Options.Help_Mode_Type) is
+   ----------------------------------------------------------------------------
+
+      Component                  : constant String := "GNOGA_Ada_Lib";
 
    begin
       Log_In (Debug or Trace_Options, "mode " & Help_Mode'img);
@@ -42,13 +134,14 @@ package body GNOGA_Ada_Lib is
       when Ada_Lib.Options.Program_Mode =>
          -- options without modifier
          Ada_Lib.Help.Create_Option (Trace_Option, "<TRACE OPTIONS>",
-            "trace flags.", Component, Ada_Lib.Help.Unmodified_Flag);
+            "trace flags.", Component, Ada_Lib.Help.Modifier);
 
       when Ada_Lib.Options.Trace_Mode =>
-         Put_Line ("Ada_Lib GNOGA library trace options (-" &
-            Trace_Option & ")");
+         Put_Line ("GNOGA_Ada_Lib trace options (-" &
+            Ada_Lib.Help.Modifier & Trace_Option & ")");
          Put_Line ("      a               all");
-         Put_Line ("      d               Ada_Lib.GNOGA.Debug");
+--       Put_Line ("      b               Ada_Lib_GNOGA.Base_Debug");
+         Put_Line ("      d               Ada_Lib_GNOGA.Debug");
 
       end case;
 
@@ -96,15 +189,19 @@ package body GNOGA_Ada_Lib is
    begin
       Log_In (Trace_Options or Debug,  Quote ("parameter", Parameter));
       for Trace of Parameter loop
-         Log_Here (Trace_Options or Debug, Quote ("trace", Trace));
+Log_Here (true or Trace_Options or Debug, Quote ("trace", Trace));
 
          case Trace is
 
             when 'a' =>
+--             Ada_Lib.Options.Ada_Lib_GNOGA.Base_Debug := True;
                Debug := True;
 
+--          when 'b' =>
+--             Ada_Lib.Options.Ada_Lib_GNOGA.Base_Debug := True;
+
             when 'd' =>
-               Debug := True;
+               Ada_Lib.Options.Ada_Lib_GNOGA.Debug := True;
 
             when others =>
                declare
@@ -125,6 +222,7 @@ package body GNOGA_Ada_Lib is
    ---------------------------------------------------------------
 begin
 --debug := True;
+--Trace_Options := True;
    Log_Here (Debug);
 
 end GNOGA_Ada_Lib;

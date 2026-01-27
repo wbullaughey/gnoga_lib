@@ -15,7 +15,7 @@ package body GNOGA_Ada_Lib.Base is
 
    use type Ada.Task_Identification.Task_Id;
 
-   Debug          : Boolean renames Ada_Lib.Options.Ada_Lib_GNOGA.Base_Debug;
+   Debug          : Boolean renames Ada_Lib.Options.GNOGA.Base_Debug;
    Message_Loop   : Message_Loop_Access := Null;
    Task_Id        : Ada.Task_Identification.Task_Id :=
                      Ada.Task_Identification.Null_Task_Id;
@@ -56,6 +56,7 @@ package body GNOGA_Ada_Lib.Base is
    ---------------------------------------------------------------
 
    begin
+log_here (debug'img);
       Log_In (Debug, "GNOGA_Initialized " & GNOGA_Initialized'img &
          " Wait_For_Completion " & Wait_For_Completion'img &
          " port" & Port'img &
@@ -102,6 +103,7 @@ package body GNOGA_Ada_Lib.Base is
       Log_Here (Debug, "Wait_For_Completion " & Wait_For_Completion'img);
 
       if Wait_For_Completion then
+         Log_Here (Debug);
          Message_Loop_Signal.Wait;
       end if;
       Log_Out (Debug);
