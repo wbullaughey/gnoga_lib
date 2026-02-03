@@ -19,7 +19,7 @@ package GNOGA_Ada_Lib.Base is
       Handler                    : in     Standard.Gnoga.Application.Multi_Connect.Application_Connect_Event;
       Application_Title          : in     String;
       Port                       : in     Standard.Ada_Lib.Socket_IO.Port_Type;
-      Wait_For_Completion        : in     Boolean;
+      Wait_For_Message_Loop_Exit        : in     Boolean;
       Handler_Path               : in     String := "default";
       Verbose                    : in     Boolean := False);
 
@@ -32,8 +32,10 @@ package GNOGA_Ada_Lib.Base is
       Directory                  : in     String;
       Port                       : in     Ada_Lib.Socket_IO.Port_Type;
       Verbose                    : in     Boolean;
-      Wait_For_Completion        : in     Boolean);   -- should be false for
+      Wait_For_Message_Loop_Exit        : in     Boolean);   -- should be false for
                                                       -- multiple unit tests
+
+   procedure Wait_For_Message_Loop_Exit;
 
 end GNOGA_Ada_Lib.Base;
 

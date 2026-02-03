@@ -50,15 +50,14 @@ package body GNOGA_Ada_Lib.Base is
       Handler                    : in     Standard.Gnoga.Application.Multi_Connect.Application_Connect_Event;
       Application_Title          : in     String;
       Port                       : in     Standard.Ada_Lib.Socket_IO.Port_Type;
-      Wait_For_Completion        : in     Boolean;
+      Wait_For_Message_Loop_Exit        : in     Boolean;
       Handler_Path               : in     String := "default";
       Verbose                    : in     Boolean := False) is
    ---------------------------------------------------------------
 
    begin
-log_here (debug'img);
       Log_In (Debug, "GNOGA_Initialized " & GNOGA_Initialized'img &
-         " Wait_For_Completion " & Wait_For_Completion'img &
+         " Wait_For_Message_Loop_Exit " & Wait_For_Message_Loop_Exit'img &
          " port" & Port'img &
          " verbose " & Verbose'img);
 
@@ -100,9 +99,9 @@ log_here (debug'img);
          delay 0.1;
       end loop;
 
-      Log_Here (Debug, "Wait_For_Completion " & Wait_For_Completion'img);
+      Log_Here (Debug, "Wait_For_Message_Loop_Exit " & Wait_For_Message_Loop_Exit'img);
 
-      if Wait_For_Completion then
+      if Wait_For_Message_Loop_Exit then
          Log_Here (Debug);
          Message_Loop_Signal.Wait;
       end if;
@@ -122,13 +121,13 @@ log_here (debug'img);
       Directory                  : in     String;
       Port                       : in     Ada_Lib.Socket_IO.Port_Type;
       Verbose                    : in     Boolean;
-      Wait_For_Completion        : in     Boolean) is -- should be false for
+      Wait_For_Message_Loop_Exit        : in     Boolean) is -- should be false for
                                                       -- multiple unit tests
    ----------------------------------------------------------------
 
    begin
       Log_In (Debug, Quote ("directory", Directory) &
-         " Wait_For_Completion " & Wait_For_Completion'img &
+         " Wait_For_Message_Loop_Exit " & Wait_For_Message_Loop_Exit'img &
          " port" & Port'img);
 
       if Directory'length > 0 then
@@ -144,9 +143,9 @@ log_here (debug'img);
          Port                 => Port,
 --       Start_Message_Loop   => True,
          Verbose              => Verbose,
-         Wait_For_Completion  => Wait_For_Completion);
+         Wait_For_Message_Loop_Exit  => Wait_For_Message_Loop_Exit);
 
---    if Wait_For_Completion then
+--    if Wait_For_Message_Loop_Exit then
 --       Log_Here (Debug, "wait for completion");
 --       GNOGA_Ada_Lib.Base.Message_Loop_SignalWait;
 --    end if;
@@ -198,6 +197,16 @@ log_here (debug'img);
 ----    Log_Out (Debug);
 --   end Stop_GNOGA;
 --
+   ---------------------------------------------------------------
+   procedure Wait_For_Message_Loop_Exit is
+   ---------------------------------------------------------------
+
+   begin
+      Log_In (Debug);
+      Message_Loop_Signal.Wait;
+      Log_Out (Debug);
+   end Wait_For_Message_Loop_Exit;
+
    ---------------------------------------------------------------
    protected body Message_Loop_Signal is
    ---------------------------------------------------------------

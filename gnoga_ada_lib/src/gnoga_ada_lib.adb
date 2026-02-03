@@ -189,7 +189,6 @@ return "";
    begin
       Log_In (Trace_Options or Debug,  Quote ("parameter", Parameter));
       for Trace of Parameter loop
-Log_Here (true or Trace_Options or Debug, Quote ("trace", Trace));
 
          case Trace is
 
