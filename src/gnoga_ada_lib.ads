@@ -4,24 +4,11 @@ with Ada_Lib.Trace;
 with Gnoga.Gui.Base;
 with Gnoga.Gui.Window;
 with GNAT.Source_Info;
-with Gnoga.Types;
+--with Gnoga.Types;
 
 package Gnoga_Ada_Lib is
 
    Failed   : exception;
-
-   type Connection_Data_Type is new Gnoga.Types.Connection_Data_Type with
-                                    record
-         Main_Window : Gnoga.Gui.Window.Pointer_To_Window_Class := Null;
-      end record;
-
-   type Connection_Data_Access is access all Connection_Data_Type;
-   type Connection_Data_Class_Access is access all Connection_Data_Type'class;
-
-   procedure Set_Main_Window (
-      Connection_Data         : in out Connection_Data_Type;
-      Main_Window             : in     Gnoga.Gui.Window.
-                                          Pointer_To_Window_Class);
 
    type GNOGA_Ada_Lib_Option_Type is new Ada_Lib.Options.Nested.
                      Nested_Options_Type with null record;
@@ -39,7 +26,9 @@ package Gnoga_Ada_Lib is
    function Initialize (
      Options                     : in out GNOGA_Ada_Lib_Option_Type;
      From                        : in     String := Ada_Lib.Trace.Here
-   ) return Boolean;
+   ) return Boolean
+   with pre    => Options.Verify_Preinitialize,
+        post   => Options.Verify_Initialized;
 
    function Process_Option (  -- process one option
      Options   : in out GNOGA_Ada_Lib_Option_Type;

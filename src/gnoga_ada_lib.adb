@@ -56,7 +56,6 @@ return "";
      Options                     : in out GNOGA_Ada_Lib_Option_Type;
      From                        : in     String := Ada_Lib.Trace.Here
    ) return Boolean is
-   pragma Unreferenced (Options);
    ----------------------------------------------------------------------------
 
    begin
@@ -66,7 +65,8 @@ return "";
          Ada_Lib.Options.Runstring.With_Parameters,
          Options_With_Parameters, From);
 
-      return Log_Out (True, Debug or Trace_Options);
+      return Log_Out (Ada_Lib.Options.Nested.Nested_Options_Type (
+            Options).Initialize, Debug or Trace_Options);
    end Initialize;
 
    ----------------------------------------------------------------------------
@@ -165,18 +165,6 @@ return "";
    begin
       Window.Alert (Error_Message);
    end Report_Exception;
-
-   ---------------------------------------------------------------
-   procedure Set_Main_Window (
-      Connection_Data         : in out Connection_Data_Type;
-      Main_Window             : in     Standard.Gnoga.Gui.Window.
-                                          Pointer_To_Window_Class) is
-   ---------------------------------------------------------------
-
-   begin
-      Log_Here (Debug);
-      Connection_Data.Main_Window := Main_Window;
-   end Set_Main_Window;
 
    ---------------------------------------------------------------
    procedure Trace_Parse (
