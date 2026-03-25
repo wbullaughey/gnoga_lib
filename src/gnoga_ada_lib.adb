@@ -21,7 +21,7 @@ package body GNOGA_Ada_Lib is
    ----------------------------------------------------------------------------
    procedure Display_Help (            -- common for all programs that use GNOGA_Options
                               -- prints full help, aborts program
-     Options                     : in     GNOGA_Ada_Lib_Option_Type;  -- only used for dispatch
+     Options                     : in     GNOGA_Ada_Lib_Options_Type;  -- only used for dispatch
      Message                     : in     String := "";   -- leave blank no error help
      Halt                        : in     Boolean := True) is
    ----------------------------------------------------------------------------
@@ -29,6 +29,27 @@ package body GNOGA_Ada_Lib is
    begin
 not_implemented;
    end Display_Help;
+
+   ----------------------------------------------------------------
+   function Get_GNOGA_Ada_Lib_Read_Only_Options (
+      From                       : in     String := Ada_Lib.Trace.Here
+   ) return GNOGA_Ada_Lib_Options_Constant_Class_Access is
+   ----------------------------------------------------------------
+
+   begin
+not_implemented;
+return null;
+   end Get_GNOGA_Ada_Lib_Read_Only_Options;
+
+   ----------------------------------------------------------------
+   function Get_HTTP_Port (
+     Options                     : in     GNOGA_Ada_Lib_Options_Type
+   ) return Ada_Lib.Socket_IO.Port_Type is
+   ----------------------------------------------------------------
+
+   begin
+      return Options.HTTP_Port;
+   end Get_HTTP_Port;
 
    ----------------------------------------------------------------
    function Has_Parent (
@@ -42,7 +63,7 @@ not_implemented;
 
    ----------------------------------------------------------------------------
    function Image (
-     Options                     : in     GNOGA_Ada_Lib_Option_Type
+     Options                     : in     GNOGA_Ada_Lib_Options_Type
    ) return String is
    ----------------------------------------------------------------------------
 
@@ -53,25 +74,27 @@ return "";
 
    ----------------------------------------------------------------------------
    function Initialize (
-     Options                     : in out GNOGA_Ada_Lib_Option_Type;
+     Options                     : in out GNOGA_Ada_Lib_Options_Type;
      From                        : in     String := Ada_Lib.Trace.Here
    ) return Boolean is
    ----------------------------------------------------------------------------
 
    begin
-      Log_In (Debug or Trace_Options);
+      Log_In (Debug or Trace_Options, Tag_Name ("Options",
+         GNOGA_Ada_Lib_Options_Type'class (Options)'tag));
 
       Ada_Lib.Options.Runstring.Options.Register (
          Ada_Lib.Options.Runstring.With_Parameters,
          Options_With_Parameters, From);
 
-      return Log_Out (Ada_Lib.Options.Nested.Nested_Options_Type (
+      return Log_Out (Ada_Lib.Options.Verification.
+         Verification_Nested_Options_Type (
             Options).Initialize, Debug or Trace_Options);
    end Initialize;
 
    ----------------------------------------------------------------------------
    function Process_Option (  -- process one option
-     Options   : in out GNOGA_Ada_Lib_Option_Type;
+     Options   : in out GNOGA_Ada_Lib_Options_Type;
      Iterator  : in out Ada_Lib.Options.Command_Line_Iterator_Interface'class;
      Option    : in     Ada_Lib.Options.Base_Flag_Option_Type'class
    ) return Boolean is
@@ -120,7 +143,7 @@ return "";
 
    ----------------------------------------------------------------------------
    procedure Program_Help (
-      Options     : in     GNOGA_Ada_Lib_Option_Type;
+      Options     : in     GNOGA_Ada_Lib_Options_Type;
       Help_Mode   : in     Ada_Lib.Options.Help_Mode_Type) is
    ----------------------------------------------------------------------------
 
