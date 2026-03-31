@@ -24,15 +24,15 @@ package Gnoga_Ada_Lib is
      Message                     : in     String := "";   -- leave blank no error help
      Halt                        : in     Boolean := True);
 
-   function Get_GNOGA_Ada_Lib_Read_Only_Options (
-      From                       : in     String := Ada_Lib.Trace.Here
-   ) return GNOGA_Ada_Lib_Options_Constant_Class_Access
-   with Pre    => Ada_Lib.Options.Verification.Have_Ada_Lib_Program_Options;
+-- function Get_GNOGA_Ada_Lib_Read_Only_Options (
+--    From                       : in     String := Ada_Lib.Trace.Here
+-- ) return GNOGA_Ada_Lib_Options_Constant_Class_Access
+-- with Pre    => Ada_Lib.Options.Verification.Have_Ada_Lib_Verification_Options;
 
    function Get_HTTP_Port (
      Options                     : in     GNOGA_Ada_Lib_Options_Type
    ) return Ada_Lib.Socket_IO.Port_Type
-   with Pre => Ada_Lib.Options.Verification.Have_Ada_Lib_Program_Options;
+   with Pre => Ada_Lib.Options.Verification.Have_Ada_Lib_Verification_Options;
 
    function Image (
      Options                     : in     GNOGA_Ada_Lib_Options_Type

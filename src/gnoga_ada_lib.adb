@@ -30,17 +30,19 @@ package body GNOGA_Ada_Lib is
 not_implemented;
    end Display_Help;
 
-   ----------------------------------------------------------------
-   function Get_GNOGA_Ada_Lib_Read_Only_Options (
-      From                       : in     String := Ada_Lib.Trace.Here
-   ) return GNOGA_Ada_Lib_Options_Constant_Class_Access is
-   ----------------------------------------------------------------
-
-   begin
-not_implemented;
-return null;
-   end Get_GNOGA_Ada_Lib_Read_Only_Options;
-
+--   ----------------------------------------------------------------
+--   function Get_GNOGA_Ada_Lib_Read_Only_Options (
+--      From                       : in     String := Ada_Lib.Trace.Here
+--   ) return GNOGA_Ada_Lib_Options_Constant_Class_Access is
+--   pragma Unreferenced (From);
+--   ----------------------------------------------------------------
+--
+--   begin
+--      Log_Here (Trace_Conversions, "from " & From);
+--not_implemented;
+--return null;
+--   end Get_GNOGA_Ada_Lib_Read_Only_Options;
+--
    ----------------------------------------------------------------
    function Get_HTTP_Port (
      Options                     : in     GNOGA_Ada_Lib_Options_Type
