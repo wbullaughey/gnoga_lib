@@ -24,10 +24,10 @@ package Gnoga_Ada_Lib is
      Message                     : in     String := "";   -- leave blank no error help
      Halt                        : in     Boolean := True);
 
--- function Get_GNOGA_Ada_Lib_Read_Only_Options (
---    From                       : in     String := Ada_Lib.Trace.Here
--- ) return GNOGA_Ada_Lib_Options_Constant_Class_Access
--- with Pre    => Ada_Lib.Options.Verification.Have_Ada_Lib_Verification_Options;
+   function Get_GNOGA_Ada_Lib_Read_Only_Options (
+      From                       : in     String := Ada_Lib.Trace.Here
+   ) return GNOGA_Ada_Lib_Options_Constant_Class_Access
+   with Pre    => Ada_Lib.Options.Verification.Have_Ada_Lib_Verification_Options;
 
    function Get_HTTP_Port (
      Options                     : in     GNOGA_Ada_Lib_Options_Type
@@ -65,15 +65,16 @@ package Gnoga_Ada_Lib is
       Message        : in     String;
       Where          : in     String := GNAT.Source_Info.Source_Location);
 
-   procedure Trace_Parse (
-      Iterator       : in out Ada_Lib.Options.
-                                 Command_Line_Iterator_Interface'class);
-
 private
    type GNOGA_Ada_Lib_Options_Type is new Ada_Lib.Options.Verification.
          Verification_Nested_Options_Type with record
       HTTP_Port            : Ada_Lib.Socket_IO.Port_Type := 8080;
    end record;
+
+   procedure Trace_Parse (
+      Options     : in out GNOGA_Ada_Lib_Options_Type;
+      Iterator    : in out Ada_Lib.Options.
+                       Command_Line_Iterator_Interface'class);
 
    GNOGA_Initialized             : Boolean := False;  -- can only be done once per program
    Main_Created                  : Boolean := False;

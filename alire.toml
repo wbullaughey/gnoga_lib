@@ -29,4 +29,8 @@ gnoga = "~0.1.0-dev"
 [[pins]]
 gnoga = { path='../vendor/github.com/gnoga' }
 
+[[depends-on]]
+gnatcoll_minimal = "*"
+
+
 
