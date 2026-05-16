@@ -1,6 +1,6 @@
 with Ada.Directories;
 with Ada.Task_Identification;
-with Ada_Lib.Options;
+--with Ada_Lib.Options.GNOGA;
 with Ada_Lib.String_Quote; use Ada_Lib.String_Quote;
 with Ada_Lib.Trace; use Ada_Lib.Trace;
 with Ada_Lib.Trace_Tasks;
@@ -15,7 +15,7 @@ package body GNOGA_Ada_Lib.Base is
 
    use type Ada.Task_Identification.Task_Id;
 
-   Debug          : Boolean renames Ada_Lib.Options.GNOGA.Base_Debug;
+   Debug          : Boolean := False; --renames Ada_Lib.Options.GNOGA.Base_Debug;
    Message_Loop   : Message_Loop_Access := Null;
    Task_Id        : Ada.Task_Identification.Task_Id :=
                      Ada.Task_Identification.Null_Task_Id;
