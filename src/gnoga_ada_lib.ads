@@ -1,4 +1,5 @@
 with Ada.Exceptions;
+with Ada_Lib.Help;
 with Ada_Lib.Options.Verification;
 with Ada_Lib.Socket_IO;
 with Ada_Lib.Trace;
@@ -21,6 +22,7 @@ package Gnoga_Ada_Lib is
    procedure Display_Help (            -- common for all programs that use GNOGA_Options
                               -- prints full help, aborts program
      Options                     : in     GNOGA_Ada_Lib_Options_Type;  -- only used for dispatch
+     Parameters                  : in     Ada_Lib.Options.Argument_Array;
      Message                     : in     String := "";   -- leave blank no error help
      Halt                        : in     Boolean := True);
 
@@ -77,6 +79,6 @@ private
                        Command_Line_Iterator_Interface'class);
 
    GNOGA_Initialized             : Boolean := False;  -- can only be done once per program
-   Main_Created                  : Boolean := False;
+-- Main_Created                  : Boolean := False; 6/11/26
 
 end Gnoga_Ada_Lib;

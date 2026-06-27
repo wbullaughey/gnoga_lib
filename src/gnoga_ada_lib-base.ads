@@ -23,8 +23,8 @@ package GNOGA_Ada_Lib.Base is
       Handler_Path               : in     String := "default";
       Verbose                    : in     Boolean := False);
 
-   procedure Set_Main_Created (
-      Value                      : in     Boolean);
+-- procedure Set_Main_Created ( 6/11/26
+--    Value                      : in     Boolean);
 
    procedure Run (
       Handler                    : in     Gnoga.Application.Multi_Connect.

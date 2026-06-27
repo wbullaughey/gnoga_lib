@@ -3,6 +3,7 @@ with Ada_Lib.Help;
 --with Ada_Lib.Options.Create;
 with Ada_Lib.Options.Runstring;
 with Ada_Lib.String_Quote; use Ada_Lib.String_Quote;
+--with ada_lib.strings;
 with Ada_Lib.Trace; use Ada_Lib.Trace;
 
 package body GNOGA_Ada_Lib is
@@ -22,8 +23,10 @@ package body GNOGA_Ada_Lib is
    procedure Display_Help (            -- common for all programs that use GNOGA_Options
                               -- prints full help, aborts program
      Options                     : in     GNOGA_Ada_Lib_Options_Type;  -- only used for dispatch
+     Parameters                  : in     Ada_Lib.Options.Argument_Array;
      Message                     : in     String := "";   -- leave blank no error help
      Halt                        : in     Boolean := True) is
+   pragma Unreferenced (Parameters, Options, Message, Halt);
    ----------------------------------------------------------------------------
 
    begin
@@ -157,7 +160,7 @@ return "";
 
       when Ada_Lib.Options.Program_Mode =>
          -- options without modifier
-         Ada_Lib.Help.Create_Option (Trace_Option, True, "<TRACE OPTIONS>",
+         Ada_Lib.Help.Create_Option (Trace_Option, True, "trace options",
             "trace flags.", Component, Ada_Lib.Help.Modifier);
 
       when Ada_Lib.Options.Trace_Mode =>
@@ -165,8 +168,12 @@ return "";
          Put_Line ("GNOGA_Ada_Lib trace options (-" &
             Ada_Lib.Help.Modifier & Trace_Option & ")");
          Put_Line ("      a               all");
---       Put_Line ("      b               Ada_Lib_GNOGA.Base_Debug");
+         Put_Line ("      A               Ada_Lib_GNOGA.Ada_Lib_Debug");
+         Put_Line ("      b               Ada_Lib_GNOGA.Base_Debug");
          Put_Line ("      d               Ada_Lib_GNOGA.Debug");
+         Put_Line ("      D               GNOGA.Debug");
+         Put_Line ("      l               GNOGA.Library_Debug");
+         Put_Line ("      s               GNOGA.Server_Debug");
 
       end case;
 
@@ -207,14 +214,34 @@ return "";
          case Trace is
 
             when 'a' =>
---             Ada_Lib.Options.Ada_Lib_GNOGA.Base_Debug := True;
-               Debug := True;
+               Ada_Lib.Options.Ada_Lib_GNOGA.Debug := True;
+               Ada_Lib.Options.Ada_Lib_GNOGA.Ada_Lib_Debug := True;
+               Ada_Lib.Options.Ada_Lib_GNOGA.Base_Debug := True;
+               Ada_Lib.Options.GNOGA.Debug := True;
+               Ada_Lib.Options.GNOGA.Library_Debug := True;
+               Ada_Lib.Options.GNOGA.Options_Debug := True;
+               Ada_Lib.Options.GNOGA.Server_Debug := True;
 
---          when 'b' =>
---             Ada_Lib.Options.Ada_Lib_GNOGA.Base_Debug := True;
+            when 'A' =>
+               Ada_Lib.Options.Ada_Lib_GNOGA.Ada_Lib_Debug := True;
+
+            when 'b' =>
+               Ada_Lib.Options.Ada_Lib_GNOGA.Base_Debug := True;
 
             when 'd' =>
                Ada_Lib.Options.Ada_Lib_GNOGA.Debug := True;
+
+            when 'D' =>
+               Ada_Lib.Options.GNOGA.Debug := True;
+
+            when 'l' =>
+               Ada_Lib.Options.GNOGA.Library_Debug := True;
+
+            when 'o' =>
+               Ada_Lib.Options.GNOGA.Options_Debug := True;
+
+            when 's' =>
+               Ada_Lib.Options.GNOGA.Server_Debug := True;
 
             when others =>
                declare

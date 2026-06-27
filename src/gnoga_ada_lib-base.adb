@@ -1,7 +1,9 @@
 with Ada.Directories;
 with Ada.Task_Identification;
---with Ada_Lib.Options.GNOGA;
+with Ada_Lib.GNOGA;
+with Ada_Lib.Options;
 with Ada_Lib.String_Quote; use Ada_Lib.String_Quote;
+with ada_lib.strings;
 with Ada_Lib.Trace; use Ada_Lib.Trace;
 with Ada_Lib.Trace_Tasks;
 --with Gnoga.Application.Multi_Connect;
@@ -15,7 +17,7 @@ package body GNOGA_Ada_Lib.Base is
 
    use type Ada.Task_Identification.Task_Id;
 
-   Debug          : Boolean := False; --renames Ada_Lib.Options.GNOGA.Base_Debug;
+   Debug          : Boolean renames Ada_Lib.Options.Ada_Lib_GNOGA.Base_Debug;
    Message_Loop   : Message_Loop_Access := Null;
    Task_Id        : Ada.Task_Identification.Task_Id :=
                      Ada.Task_Identification.Null_Task_Id;
@@ -82,7 +84,7 @@ package body GNOGA_Ada_Lib.Base is
 
 
       if Message_Loop = Null then      -- only one per program
-         Log_Here (Debug);
+         Ada_Lib.Trace.Log_Here (Debug);
          Message_Loop := new Message_Loop_Task;
 
          while Task_ID = Ada.Task_Identification.Null_Task_Id loop
@@ -93,13 +95,18 @@ package body GNOGA_Ada_Lib.Base is
          Log_Here (Debug);
          delay 0.1;        -- let message loop initialize
       end if;
-      Log_Here (Debug, "Main_Created " & Main_Created'img);
+      Log_Here (Debug);
 
-      while not Main_Created loop     -- wait for On_Connect to complete
+      loop     -- wait for On_Connect to complete
+         if Ada_Lib.GNOGA.Create_Main_Window_Package.Has_Main_Window then
+            Log_Here (Debug);
+            exit;
+         end if;
          delay 0.1;
       end loop;
 
-      Log_Here (Debug, "Wait_For_Message_Loop_Exit " & Wait_For_Message_Loop_Exit'img);
+      Log_Here (Debug, "Wait_For_Message_Loop_Exit " &
+         Wait_For_Message_Loop_Exit'img);
 
       if Wait_For_Message_Loop_Exit then
          Log_Here (Debug);
@@ -174,15 +181,15 @@ package body GNOGA_Ada_Lib.Base is
 --      end if;
 --   end Set_Base;
 
-   ---------------------------------------------------------------
-   procedure Set_Main_Created (
-      Value                      : in     Boolean) is
-   ---------------------------------------------------------------
-
-   begin
-      Log_Here (Debug, "value " & Value'img);
-      Main_Created := Value;
-   end Set_Main_Created;
+-- ---------------------------------------------------------------
+-- procedure Set_Main_Created (  6/11/26
+--    Value                      : in     Boolean) is
+-- ---------------------------------------------------------------
+--
+-- begin
+--    Log_Here (Debug, "value " & Value'img);
+--    Main_Created := Value;
+-- end Set_Main_Created;
 --
 --   ---------------------------------------------------------------
 --   procedure Stop_GNOGA is
