@@ -1,5 +1,4 @@
 with Ada.Exceptions;
-with Ada_Lib.Help;
 with Ada_Lib.Options.Verification;
 with Ada_Lib.Socket_IO;
 with Ada_Lib.Trace;
