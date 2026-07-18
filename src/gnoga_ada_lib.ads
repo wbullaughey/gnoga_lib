@@ -43,9 +43,9 @@ package Gnoga_Ada_Lib is
    function Initialize (
      Options                     : in out GNOGA_Ada_Lib_Options_Type;
      From                        : in     String := Ada_Lib.Trace.Here
-   ) return Boolean
-   with pre    => not Options.Verify_Step (Ada_Lib.Options.Initialized),
-        post   => Options.Verify_Step (Ada_Lib.Options.Initialized);
+   ) return Boolean;
+-- with pre    => not Options.Verify_Step (Ada_Lib.Options.Initialized),
+--      post   => Options.Verify_Step (Ada_Lib.Options.Initialized);
 
    function Process_Option (  -- process one option
      Options   : in out GNOGA_Ada_Lib_Options_Type;

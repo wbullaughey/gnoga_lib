@@ -33,8 +33,7 @@ package body Ada_Lib.GNOGA is
       Result   : constant Boolean := Create_Main_Window_Package.Has_Main_Window;
 
    begin
-      return Log_Here (Result, Debug or else Trace_Pre_Post_Conditions or else
-         (Trace_Pre_Post_False and not Result));
+      return Log_Here (Result, Trace_Pre_Post (Result, Debug));
    end Has_Main_Window;
 
    ---------------------------------------------------------------
@@ -158,8 +157,7 @@ package body Ada_Lib.GNOGA is
          Result   : constant Boolean := Lock.Main_Window /= Null;
 
       begin
-         Log_Here (Debug or Trace_Pre_Post_Conditions, Result'img);
-         return Result;
+         return Log_Here (Result, Trace_Pre_Post (Result, Debug));
       end Has_Main_Window;
 
       ---------------------------------------------------------------
@@ -181,9 +179,7 @@ package body Ada_Lib.GNOGA is
          Result   : constant Boolean := Ada_Lib.Lock.Lock_Type (Lock).Is_Locked;
 
       begin
-         Log_Here (Debug or Trace_Pre_Post_Conditions,
-            "window locked  " & Result'img);
-         return Result;
+         return Log_Here (Result, Trace_Pre_Post (Result, Debug), "window locked  " & Result'img);
       end Is_Window_Locked;
 
       ---------------------------------------------------------------
